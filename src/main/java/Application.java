@@ -6,6 +6,9 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
 public class Application {
     public static void main(String[] args) throws IOException {
         Map<String, Properties> properties = new HashMap<>();
@@ -28,12 +31,12 @@ public class Application {
                     ex.printStackTrace();
                 }
                 properties.put(path.toString(), prop);
-                bustKeys(keys, prop);
+                runThroughKeys(keys, prop);
             });
         }
     }
 
-    private static void bustKeys(Map<String, Object> keys, Properties properties){
+    private static void runThroughKeys(Map<String, Object> keys, Properties properties){
         properties.keySet().forEach(key -> {
             String string = key.toString().trim();
             if(!keys.containsKey(string)){
