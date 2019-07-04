@@ -11,14 +11,14 @@ public class Application {
         Map<String, Properties> properties = new HashMap<>();
         Map<String, Object> keys = new HashMap<>();
         Map<String, List<String>> forgotKeys = new HashMap<>();
-        LoadProperties(keys, properties);
-        CheckMissing(keys, properties, forgotKeys);
-        PrintValues(keys, properties);
-        PrintMissing(forgotKeys, properties);
+        loadProperties(keys, properties);
+        checkMissingKeys(keys, properties, forgotKeys);
+        printAllValues(keys, properties);
+        printMissingValues(forgotKeys, properties);
 
     }
 
-    public static void LoadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
+    public static void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
         try (Stream<Path> paths = Files.walk(Paths.get("E:/testProp"))) {
             paths.filter(Files::isRegularFile).forEach(path -> {
                 Properties prop = new Properties();
@@ -28,12 +28,12 @@ public class Application {
                     ex.printStackTrace();
                 }
                 properties.put(path.toString(), prop);
-                BustKeys(keys, prop);
+                bustKeys(keys, prop);
             });
         }
     }
 
-    private static void BustKeys(Map<String, Object> keys, Properties properties){
+    private static void bustKeys(Map<String, Object> keys, Properties properties){
         properties.keySet().forEach(key -> {
             String string = key.toString().trim();
             if(!keys.containsKey(string)){
@@ -42,7 +42,7 @@ public class Application {
         });
     }
 
-    public static void PrintValues(Map<String, Object> keys, Map<String, Properties> properties){
+    public static void printAllValues(Map<String, Object> keys, Map<String, Properties> properties){
         String newLine = System.getProperty("line.separator");
         System.out.format("%80s", "Key");
         List<String> languageKeys = new ArrayList<>(properties.keySet());
@@ -61,17 +61,17 @@ public class Application {
         });
     }
 
-    public static void CheckMissing(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
+    public static void checkMissingKeys(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         keys.keySet().forEach(wordKey -> {
             for (String languageKey : languageKeys){
                 Properties property = properties.get(languageKey);
                 String propertyValue = property.getProperty(wordKey);
                 if (propertyValue == null) {
-                    CheckValue(forgotKeys, wordKey, languageKey);
+                    checkValueAbsence(forgotKeys, wordKey, languageKey);
                 } else {
                     if (propertyValue.trim().isEmpty()){
-                        CheckValue(forgotKeys, wordKey, languageKey);
+                        checkValueAbsence(forgotKeys, wordKey, languageKey);
                     }
                     String[] split2 = languageKey.split("messages")[1].split(".properties");
                     String languageMarker;
@@ -81,21 +81,21 @@ public class Application {
                         languageMarker = "_en";
                     }
                     if (propertyValue.trim().toLowerCase().contains(languageMarker)){
-                        CheckValue(forgotKeys, wordKey, languageKey);
+                        checkValueAbsence(forgotKeys, wordKey, languageKey);
                     }
                 }
             }
         });
     }
 
-    private static void CheckValue(Map<String, List<String>> forgotKeys, String wordKey, String languageKey){
+    private static void checkValueAbsence(Map<String, List<String>> forgotKeys, String wordKey, String languageKey){
         if(!forgotKeys.containsKey(languageKey)){
             forgotKeys.put(languageKey, new ArrayList<>());
         }
         forgotKeys.get(languageKey).add(wordKey);
     }
 
-    public static void PrintMissing(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
+    public static void printMissingValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
         String newLine = System.getProperty("line.separator");
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         String englishPropertyKey = languageKeys.stream().filter(name -> !name.contains("messages_")).findFirst().get();

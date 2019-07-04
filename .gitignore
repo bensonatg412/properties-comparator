@@ -1,5 +1,18 @@
-#ignore Intellij module file..
-propertiescomparator.iml
-#.. and directories without sourses
+#ignore Intellij directories and files
+*.iml
+*.iws
+*.ipr
 target/
 .idea/
+#ignore Eclipse directories and files
+.settings/
+.classpath
+.project
+#ignore Net Beans directories and files
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
