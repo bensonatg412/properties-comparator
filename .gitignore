@@ -1,0 +1,5 @@
+#ignore Intellij module file..
+propertiescomparator.iml
+#.. and directories without sourses
+target/
+.idea/
