@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public class PropertiesComparator {
     public static void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
-        try (Stream<Path> paths = Files.walk(Paths.get("E:/testProp"))) {
+        try (Stream<Path> paths = Files.walk(Paths.get("../testProp"))) {
             paths.filter(Files::isRegularFile).forEach(path -> {
                 Properties prop = new Properties();
                 try {
