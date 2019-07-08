@@ -19,5 +19,4 @@ public class PropertiesComparatorApplication {
 		PropertiesComparator.printAllValues(keys, properties);
 		PropertiesComparator.printMissingValues(forgotKeys, properties);
 	}
-
 }
