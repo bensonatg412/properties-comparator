@@ -1,18 +1,36 @@
-#ignore Intellij directories and files
-*.iml
-*.iws
-*.ipr
+HELP.md
 target/
-.idea/
-#ignore Eclipse directories and files
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### Eclipse ###
 .settings/
 .classpath
 .project
-#ignore Net Beans directories and files
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
+
+### VS Code ###
+.vscode/
