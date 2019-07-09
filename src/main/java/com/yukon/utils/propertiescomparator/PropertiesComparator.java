@@ -1,3 +1,5 @@
+package com.yukon.utils.propertiescomparator;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +10,8 @@ import java.util.stream.Stream;
 
 public class PropertiesComparator {
     public static void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
-        try (Stream<Path> paths = Files.walk(Paths.get("../testProp"))) {
+        String pathToFiles = System.getProperty("user.dir") + "/testProp";
+        try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
             paths.filter(Files::isRegularFile).forEach(path -> {
                 Properties prop = new Properties();
                 try {
