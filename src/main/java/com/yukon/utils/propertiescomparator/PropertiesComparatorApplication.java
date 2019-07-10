@@ -11,8 +11,13 @@ public class PropertiesComparatorApplication {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(PropertiesComparatorApplication.class, args);
-		Map<String, Properties> properties = new HashMap<>();
-		Map<String, Object> keys = new HashMap<>();
+//<<<<<<< HEAD
+		Map<String, Properties> properties = new LinkedHashMap<>();
+		Map<String, Object> keys = new LinkedHashMap<>();
+//=======
+//		Map<String, Properties> properties = new HashMap<>();
+//		Map<String, Object> keys = new HashMap<>();
+//>>>>>>> develop
 		Map<String, List<String>> forgotKeys = new HashMap<>();
 		PropertiesComparator.loadProperties(keys, properties);
 		PropertiesComparator.checkMissingKeys(keys, properties, forgotKeys);
