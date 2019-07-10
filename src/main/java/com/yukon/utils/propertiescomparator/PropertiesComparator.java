@@ -7,10 +7,36 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
+import java.util.logging.*;
 
 public class PropertiesComparator {
+
+    //--------- Peter German ------------
+    private static String str = null;
+    private static Logger LOGGER = null;
+    private static FileHandler FILEH = null;
+
+    static{
+        try{
+            System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s %n");
+            FILEH = new FileHandler(".\\LogFile.log");
+            LOGGER = Logger.getLogger(PropertiesComparator.class.getName());
+            LOGGER.addHandler(FILEH);
+            SimpleFormatter formt = new SimpleFormatter();
+            FILEH.setFormatter(formt);
+            LOGGER.setUseParentHandlers(false);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    //-----------------------------------
+
     public static void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
-        try (Stream<Path> paths = Files.walk(Paths.get("../testProp"))) {
+//<<<<<<< HEAD:src/main/java/com/yukon/utils/propertiescomparator/PropertiesComparator.java
+//        try (Stream<Path> paths = Files.walk(Paths.get("../testProp"))) {
+//=======
+        try (Stream<Path> paths = Files.walk(Paths.get(".\\testProp"))) {
+//>>>>>>> develop:src/main/java/PropertiesComparator.java
             paths.filter(Files::isRegularFile).forEach(path -> {
                 Properties prop = new PropertiesSorted();
                 try {
@@ -36,18 +62,36 @@ public class PropertiesComparator {
     public static void printAllValues(Map<String, Object> keys, Map<String, Properties> properties){
         String newLine = System.getProperty("line.separator");
         System.out.format("%80s", "Key");
+        //------ Peter German ------
+        str = String.format("%80s", "Key");
+        //---------------------
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         for (String propertyKey : languageKeys) {
             System.out.format("%255s", propertyKey);
+            //------ Peter German ------
+            str += String.format("%255s", propertyKey);
+            //---------------------
         }
         System.out.format("%s", newLine);
+        //------ Peter German ------
+        LOGGER.info(str);
+        //---------------------
         keys.keySet().forEach(wordKey -> {
             System.out.format("%80s", wordKey);
+            //------ Peter German ------
+            str = String.format("%80s", wordKey);
+            //---------------------
             for (String languageKey : languageKeys){
                 Properties property = properties.get(languageKey);
                 String propertyValue = property.getProperty(wordKey);
                 System.out.format("%255s", propertyValue);
+                //------ Peter German ------
+                str += String.format("%255s", propertyValue);
+                //---------------------
             }
+            //------ Peter German ------
+            LOGGER.info(str);
+            //---------------------
             System.out.format("%s", newLine);
         });
     }
@@ -95,18 +139,38 @@ public class PropertiesComparator {
             System.out.println("-----------------------------------------------------------------------------------");
             System.out.println(languageFileKey);
             System.out.println("-----------------------------------------------------------------------------------");
+            //------ Peter German ------
+            str = String.format("%s","-----------------------------------------------------------------------------------\n" +
+                    languageFileKey+ "\n-----------------------------------------------------------------------------------");
+            LOGGER.info(str);
+            //---------------------
             for (String textKey : forgotKeys.get(languageFileKey)){
                 if(properties.get(languageFileKey).getProperty(textKey) != null){
                     System.out.println(textKey + " = " + properties.get(languageFileKey).getProperty(textKey));
+                    //------ Peter German ------
+                    str = String.format("%s",textKey + " = " + properties.get(languageFileKey).getProperty(textKey));
+                    LOGGER.info(str);
+                    //---------------------
                 }
             }
             System.out.println("-----------------------------------------------------------------------------------");
+            //------ Peter German ------
+            str = String.format("%s","-----------------------------------------------------------------------------------");
+            LOGGER.info(str);
+            //---------------------
             for (String textKey : forgotKeys.get(languageFileKey)){
                 if(properties.get(languageFileKey).getProperty(textKey) == null){
                     System.out.println(textKey + " = " + englishProperties.getProperty(textKey));
+                    //------ Peter German ------
+                    str = String.format("%s",textKey + " = " + englishProperties.getProperty(textKey));
+                    LOGGER.info(str);
+                    //---------------------
                 }
             }
             System.out.format("%s", newLine);
+            //------ Peter German ------
+            LOGGER.info("");
+            //---------------------
         }
     }
 }
