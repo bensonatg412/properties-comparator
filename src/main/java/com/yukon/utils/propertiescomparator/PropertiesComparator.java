@@ -10,11 +10,14 @@ import java.util.stream.Stream;
 import java.util.logging.*;
 
 public class PropertiesComparator {
-
+    private static Map<String, Properties> properties;
+    private static Map<String, Object> keys;
+    private static Map<String, List<String>> forgotKeys;
     //--------- Peter German ------------
     private static String str = null;
     private static Logger LOGGER = null;
     private static FileHandler FILEH = null;
+
 
     static{
         try{
@@ -31,7 +34,20 @@ public class PropertiesComparator {
     }
     //-----------------------------------
 
-    public static void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
+    public PropertiesComparator(){
+        properties = new LinkedHashMap<>();
+        keys = new LinkedHashMap<>();
+        forgotKeys = new HashMap<>();
+    }
+
+    public static void Execute() throws IOException{
+        loadProperties(keys, properties);
+        checkMissingKeys(keys, properties, forgotKeys);
+        printAllValues(keys, properties);
+        printMissingValues(forgotKeys, properties);
+    }
+
+    private static void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
         String pathToFiles = System.getProperty("user.dir") + "/testProp";
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
             paths.filter(Files::isRegularFile).forEach(path -> {
@@ -56,7 +72,7 @@ public class PropertiesComparator {
         });
     }
 
-    public static void printAllValues(Map<String, Object> keys, Map<String, Properties> properties){
+    private static void printAllValues(Map<String, Object> keys, Map<String, Properties> properties){
         String newLine = System.getProperty("line.separator");
         System.out.format("%80s", "Key");
         //------ Peter German ------
@@ -93,7 +109,7 @@ public class PropertiesComparator {
         });
     }
 
-    public static void checkMissingKeys(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
+    private static void checkMissingKeys(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         keys.keySet().forEach(wordKey -> {
             for (String languageKey : languageKeys){
@@ -127,7 +143,7 @@ public class PropertiesComparator {
         forgotKeys.get(languageKey).add(wordKey);
     }
 
-    public static void printMissingValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
+    private static void printMissingValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
         String newLine = System.getProperty("line.separator");
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         String englishPropertyKey = languageKeys.stream().filter(name -> !name.contains("messages_")).findFirst().get();
