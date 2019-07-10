@@ -19,7 +19,7 @@ public class PropertiesComparator {
     static{
         try{
             System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s %n");
-            FILEH = new FileHandler(".\\LogFile.log");
+            FILEH = new FileHandler("./LogFile.log");
             LOGGER = Logger.getLogger(PropertiesComparator.class.getName());
             LOGGER.addHandler(FILEH);
             SimpleFormatter formt = new SimpleFormatter();
@@ -32,16 +32,8 @@ public class PropertiesComparator {
     //-----------------------------------
 
     public static void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
-//<<<<<<< HEAD
         String pathToFiles = System.getProperty("user.dir") + "/testProp";
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
-//=======
-//<<<<<<< HEAD:src/main/java/com/yukon/utils/propertiescomparator/PropertiesComparator.java
-//        try (Stream<Path> paths = Files.walk(Paths.get("../testProp"))) {
-//=======
-//        try (Stream<Path> paths = Files.walk(Paths.get(".\\testProp"))) {
-//>>>>>>> develop:src/main/java/PropertiesComparator.java
-//>>>>>>> develop
             paths.filter(Files::isRegularFile).forEach(path -> {
                 Properties prop = new PropertiesSorted();
                 try {
