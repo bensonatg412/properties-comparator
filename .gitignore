@@ -1,5 +1,6 @@
 HELP.md
 *.log
+*.lck
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
