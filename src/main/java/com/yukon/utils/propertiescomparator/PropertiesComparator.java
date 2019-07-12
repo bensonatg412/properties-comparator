@@ -1,6 +1,5 @@
 package com.yukon.utils.propertiescomparator;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -37,11 +36,7 @@ public class PropertiesComparator {
         }
     }
     //-----------------------------------
-    private static String pathToFiles;
-    @Value("${path.toFiles}")
-    public void setNumber(String value){
-        pathToFiles = value;
-    }
+
 
     public void Execute() throws IOException{
         System.out.println(pathToFiles);
@@ -49,6 +44,12 @@ public class PropertiesComparator {
         checkMissingKeys(keys, properties, forgotKeys);
         printAllValues(keys, properties);
         printMissingValues(forgotKeys, properties);
+    }
+
+    private static String pathToFiles;
+    @Value("${path.toFiles}")
+    public void setNumber(String value){
+        pathToFiles = value;
     }
 
     private void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
