@@ -1,5 +1,6 @@
 HELP.md
 *.log
+*.lck
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
@@ -34,4 +35,11 @@ build/
 .project
 
 ### VS Code ###
+<<<<<<< HEAD
 .vscode/
+
+### Logs ###
+*.log
+=======
+.vscode/
+>>>>>>> 18142454dde564ed77cc0f28f6859a10b1e28b63

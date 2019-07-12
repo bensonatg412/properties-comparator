@@ -1,4 +1,8 @@
+<<<<<<< HEAD
                                                                              Key                                                                                                                                                                        E:\JavaProjects\properties-comparator\propertiescomparator\testProp\messages.properties                                                                                                                                                                     E:\JavaProjects\properties-comparator\propertiescomparator\testProp\messages_de.properties                                                                                                                                                                     E:\JavaProjects\properties-comparator\propertiescomparator\testProp\messages_fr.properties                                                                                                                                                                     E:\JavaProjects\properties-comparator\propertiescomparator\testProp\messages_nl.properties 
+=======
+                                                                             Key                                                                                                                                                                       D:\Java Projects\PropertiesComparator\properties-comparator\testProp\messages.properties                                                                                                                                                                    D:\Java Projects\PropertiesComparator\properties-comparator\testProp\messages_de.properties                                                                                                                                                                    D:\Java Projects\PropertiesComparator\properties-comparator\testProp\messages_fr.properties                                                                                                                                                                    D:\Java Projects\PropertiesComparator\properties-comparator\testProp\messages_nl.properties 
+>>>>>>> cd862c087691d667538b80cfb010a667e689a06f
                                                     LoginView.LoginField.Caption                                                                                                                                                                                                                                                          LOGIN                                                                                                                                                                                                                                                         NUTZER                                                                                                                                                                                                                                                    Identifiant                                                                                                                                                                                                                                                      GEBRUIKER 
                                                  LoginView.PasswordField.Caption                                                                                                                                                                                                                                                       PASSWORD                                                                                                                                                                                                                                                       KENNWORT                                                                                                                                                                                                                                                   Mot de passe                                                                                                                                                                                                                                                     WACHTWOORD 
                                                    LoginView.LogInButton.Caption                                                                                                                                                                                                                                                        SIGN IN                                                                                                                                                                                                                                                       ANMELDEN                                                                                                                                                                                                                                                      Connexion                                                                                                                                                                                                                                                      AANMELDEN 
@@ -580,7 +584,24 @@ Email.Content.Credentials.ChangePassword.ToChangeYourAccountPasswordPleaseProcce
                                      HistoryBalanceReport.TableHeader.Difference                                                                                                                                                                                                                                                     Difference                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null 
                                  HistoryBalanceReport.TableHeader.DifferenceDays                                                                                                                                                                                                                                                   Diff. (days)                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null 
 -----------------------------------------------------------------------------------
-E:\JavaProjects\properties-comparator\propertiescomparator\testProp\messages_nl.properties
+D:\Java Projects\PropertiesComparator\properties-comparator\testProp\messages_de.properties
+----------------------------------------------------------------------------------- 
+WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _DE 
+WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _DE 
+----------------------------------------------------------------------------------- 
+ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report 
+HistoryBalanceReport.Title = HISTORY BALANCE REPORT 
+HistoryBalanceReport.SubTitle.Employee = Employee: 
+HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button 
+HistoryBalanceReport.TableHeader.TypeOfAction = Type of action 
+HistoryBalanceReport.TableHeader.Description = Description 
+HistoryBalanceReport.TableHeader.Start = Start date 
+HistoryBalanceReport.TableHeader.End = End date 
+HistoryBalanceReport.TableHeader.Difference = Difference 
+HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days) 
+ 
+-----------------------------------------------------------------------------------
+D:\Java Projects\PropertiesComparator\properties-comparator\testProp\messages_nl.properties
 ----------------------------------------------------------------------------------- 
 WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _NL 
 WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _NL 
@@ -597,7 +618,7 @@ HistoryBalanceReport.TableHeader.Difference = Difference
 HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days) 
  
 -----------------------------------------------------------------------------------
-E:\JavaProjects\properties-comparator\propertiescomparator\testProp\messages_fr.properties
+D:\Java Projects\PropertiesComparator\properties-comparator\testProp\messages_fr.properties
 ----------------------------------------------------------------------------------- 
 ----------------------------------------------------------------------------------- 
 AddRequestView.AttachButton.Description = Attach image 
@@ -619,23 +640,6 @@ MasterTables.WorkingDays.AverageWorkingTimePerDay.Caption = Average working time
 MasterTables.WorkingDays.AverageWorkingTime.Zero = Average working time per day cannot be zero 
 WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found 
 WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images 
-ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report 
-HistoryBalanceReport.Title = HISTORY BALANCE REPORT 
-HistoryBalanceReport.SubTitle.Employee = Employee: 
-HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button 
-HistoryBalanceReport.TableHeader.TypeOfAction = Type of action 
-HistoryBalanceReport.TableHeader.Description = Description 
-HistoryBalanceReport.TableHeader.Start = Start date 
-HistoryBalanceReport.TableHeader.End = End date 
-HistoryBalanceReport.TableHeader.Difference = Difference 
-HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days) 
- 
------------------------------------------------------------------------------------
-E:\JavaProjects\properties-comparator\propertiescomparator\testProp\messages_de.properties
------------------------------------------------------------------------------------ 
-WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _DE 
-WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _DE 
------------------------------------------------------------------------------------ 
 ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report 
 HistoryBalanceReport.Title = HISTORY BALANCE REPORT 
 HistoryBalanceReport.SubTitle.Employee = Employee: 
