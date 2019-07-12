@@ -1,5 +1,6 @@
 package com.yukon.utils.propertiescomparator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,16 +15,13 @@ import java.util.logging.*;
 
 @Component
 public class PropertiesComparator {
-    private Map<String, Properties> properties;
-    private Map<String, Object> keys;
-    private Map<String, List<String>> forgotKeys;
+    private Map<String, Properties> properties = new LinkedHashMap<>();
+    private Map<String, Object> keys = new LinkedHashMap<>();
+    private Map<String, List<String>> forgotKeys = new HashMap<>();
     //--------- Peter German ------------
     private static String str = null;
     private static Logger LOGGER = null;
     private static FileHandler FILEH = null;
-
-    @Value("${number}")
-    private int number;
 
     static{
         try{
@@ -39,13 +37,6 @@ public class PropertiesComparator {
         }
     }
     //-----------------------------------
-
-    public PropertiesComparator(){
-        System.out.println(number);
-        properties = new LinkedHashMap<>();
-        keys = new LinkedHashMap<>();
-        forgotKeys = new HashMap<>();
-    }
 
 
     public void Execute() throws IOException{
