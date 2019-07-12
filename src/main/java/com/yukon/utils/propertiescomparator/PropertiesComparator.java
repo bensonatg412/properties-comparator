@@ -37,9 +37,14 @@ public class PropertiesComparator {
         }
     }
     //-----------------------------------
-
+    private static String pathToFiles;
+    @Value("${path.toFiles}")
+    public void setNumber(String value){
+        pathToFiles = value;
+    }
 
     public void Execute() throws IOException{
+        System.out.println(pathToFiles);
         loadProperties(keys, properties);
         checkMissingKeys(keys, properties, forgotKeys);
         printAllValues(keys, properties);
@@ -47,7 +52,7 @@ public class PropertiesComparator {
     }
 
     private void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
-        String pathToFiles = System.getProperty("user.dir") + "/testProp";
+       // String pathToFiles = System.getProperty("user.dir") + "/testProp";
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
             paths.filter(Files::isRegularFile).forEach(path -> {
                 Properties prop = new PropertiesSorted();

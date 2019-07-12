@@ -11,10 +11,9 @@ import java.util.*;
 
 @SpringBootApplication
 public class PropertiesComparatorApplication {
-	@Autowired
-	private static PropertiesComparator comparator;
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(PropertiesComparatorApplication.class, args);
+		PropertiesComparator comparator = new PropertiesComparator();
 		comparator.Execute();
 	}
 }
