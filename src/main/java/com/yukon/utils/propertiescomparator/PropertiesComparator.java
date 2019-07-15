@@ -39,10 +39,10 @@ public class PropertiesComparator {
 
 
     public void Execute() throws IOException{
-        System.out.println(pathToFiles);
         loadProperties(keys, properties);
         checkMissingKeys(keys, properties, forgotKeys);
         printAllValues(keys, properties);
+        printUntranslatedValues(forgotKeys, properties);
         printMissingValues(forgotKeys, properties);
     }
 
@@ -153,6 +153,41 @@ public class PropertiesComparator {
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         String englishPropertyKey = languageKeys.stream().filter(name -> !name.contains("messages_")).findFirst().get();
         Properties englishProperties = properties.get(englishPropertyKey);
+        System.out.println("MISSING VALUES SECTION");
+        for (String languageFileKey : forgotKeys.keySet()){
+            System.out.println("-----------------------------------------------------------------------------------");
+            System.out.println(languageFileKey);
+            System.out.println("-----------------------------------------------------------------------------------");
+            //------ Peter German ------
+            str = String.format("%s","-----------------------------------------------------------------------------------\n" +
+                    languageFileKey+ "\n-----------------------------------------------------------------------------------");
+            LOGGER.info(str);
+            //---------------------
+            for (String textKey : forgotKeys.get(languageFileKey)){
+                if(properties.get(languageFileKey).getProperty(textKey) == null){
+                    System.out.println(textKey + " = " + englishProperties.getProperty(textKey));
+                    //------ Peter German ------
+                    str = String.format("%s",textKey + " = " + englishProperties.getProperty(textKey));
+                    LOGGER.info(str);
+                    //---------------------
+                }
+            }
+            //------ Peter German ------
+            LOGGER.info("");
+            //---------------------
+            System.out.println("-----------------------------------------------------------------------------------");
+            //------ Peter German ------
+            str = String.format("%s","-----------------------------------------------------------------------------------");
+            LOGGER.info(str);
+            //---------------------
+
+        }
+        System.out.format("%s", newLine);
+    }
+
+    private void printUntranslatedValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
+        System.out.println("UNTRANSLATED VALUES SECTION");
+        String newLine = System.getProperty("line.separator");
         for (String languageFileKey : forgotKeys.keySet()){
             System.out.println("-----------------------------------------------------------------------------------");
             System.out.println(languageFileKey);
@@ -176,19 +211,8 @@ public class PropertiesComparator {
             str = String.format("%s","-----------------------------------------------------------------------------------");
             LOGGER.info(str);
             //---------------------
-            for (String textKey : forgotKeys.get(languageFileKey)){
-                if(properties.get(languageFileKey).getProperty(textKey) == null){
-                    System.out.println(textKey + " = " + englishProperties.getProperty(textKey));
-                    //------ Peter German ------
-                    str = String.format("%s",textKey + " = " + englishProperties.getProperty(textKey));
-                    LOGGER.info(str);
-                    //---------------------
-                }
-            }
-            System.out.format("%s", newLine);
-            //------ Peter German ------
-            LOGGER.info("");
-            //---------------------
         }
+        System.out.format("%s", newLine);
     }
+
 }
