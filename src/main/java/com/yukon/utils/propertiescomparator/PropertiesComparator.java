@@ -52,7 +52,7 @@ public class PropertiesComparator {
         pathToFiles = value;
     }
 
-    private void loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
+    private Map<String, Object> loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
        // String pathToFiles = System.getProperty("user.dir") + "/testProp";
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
             paths.filter(Files::isRegularFile).forEach(path -> {
@@ -66,6 +66,7 @@ public class PropertiesComparator {
                 runThroughKeys(keys, prop);
             });
         }
+        return keys;
     }
 
     private void runThroughKeys(Map<String, Object> keys, Properties properties){
@@ -114,7 +115,7 @@ public class PropertiesComparator {
         });
     }
 
-    private void checkMissingKeys(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
+    private Map<String, List<String>> checkMissingKeys(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         keys.keySet().forEach(wordKey -> {
             for (String languageKey : languageKeys){
@@ -139,6 +140,7 @@ public class PropertiesComparator {
                 }
             }
         });
+        return forgotKeys;
     }
 
     private void checkValueAbsence(Map<String, List<String>> forgotKeys, String wordKey, String languageKey){
@@ -214,5 +216,4 @@ public class PropertiesComparator {
         }
         System.out.format("%s", newLine);
     }
-
 }

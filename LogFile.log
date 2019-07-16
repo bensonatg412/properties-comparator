@@ -1,4 +1,4 @@
-                                                                             Key                                                                                                                                                                                                                                D:\testProp\messages.properties                                                                                                                                                                                                                             D:\testProp\messages_de.properties                                                                                                                                                                                                                             D:\testProp\messages_fr.properties                                                                                                                                                                                                                             D:\testProp\messages_nl.properties 
+                                                                             Key                                                                                                                                                                                                                                E:\testProp\messages.properties                                                                                                                                                                                                                             E:\testProp\messages_de.properties                                                                                                                                                                                                                             E:\testProp\messages_fr.properties                                                                                                                                                                                                                             E:\testProp\messages_nl.properties 
                                                     LoginView.LoginField.Caption                                                                                                                                                                                                                                                          LOGIN                                                                                                                                                                                                                                                         NUTZER                                                                                                                                                                                                                                                    Identifiant                                                                                                                                                                                                                                                      GEBRUIKER 
                                                  LoginView.PasswordField.Caption                                                                                                                                                                                                                                                       PASSWORD                                                                                                                                                                                                                                                       KENNWORT                                                                                                                                                                                                                                                   Mot de passe                                                                                                                                                                                                                                                     WACHTWOORD 
                                                    LoginView.LogInButton.Caption                                                                                                                                                                                                                                                        SIGN IN                                                                                                                                                                                                                                                       ANMELDEN                                                                                                                                                                                                                                                      Connexion                                                                                                                                                                                                                                                      AANMELDEN 
@@ -580,38 +580,23 @@ Email.Content.Credentials.ChangePassword.ToChangeYourAccountPasswordPleaseProcce
                                      HistoryBalanceReport.TableHeader.Difference                                                                                                                                                                                                                                                     Difference                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null 
                                  HistoryBalanceReport.TableHeader.DifferenceDays                                                                                                                                                                                                                                                   Diff. (days)                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null                                                                                                                                                                                                                                                           null 
 -----------------------------------------------------------------------------------
-D:\testProp\messages_nl.properties
+E:\testProp\messages_fr.properties
+----------------------------------------------------------------------------------- 
+----------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------
+E:\testProp\messages_nl.properties
 ----------------------------------------------------------------------------------- 
 WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _NL 
 WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _NL 
 ----------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------
-D:\testProp\messages_fr.properties
------------------------------------------------------------------------------------ 
------------------------------------------------------------------------------------ 
------------------------------------------------------------------------------------
-D:\testProp\messages_de.properties
+E:\testProp\messages_de.properties
 ----------------------------------------------------------------------------------- 
 WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _DE 
 WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _DE 
 ----------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------
-D:\testProp\messages_nl.properties
------------------------------------------------------------------------------------ 
-ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report 
-HistoryBalanceReport.Title = HISTORY BALANCE REPORT 
-HistoryBalanceReport.SubTitle.Employee = Employee: 
-HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button 
-HistoryBalanceReport.TableHeader.TypeOfAction = Type of action 
-HistoryBalanceReport.TableHeader.Description = Description 
-HistoryBalanceReport.TableHeader.Start = Start date 
-HistoryBalanceReport.TableHeader.End = End date 
-HistoryBalanceReport.TableHeader.Difference = Difference 
-HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days) 
- 
------------------------------------------------------------------------------------ 
------------------------------------------------------------------------------------
-D:\testProp\messages_fr.properties
+E:\testProp\messages_fr.properties
 ----------------------------------------------------------------------------------- 
 AddRequestView.AttachButton.Description = Attach image 
 AttachImage.WindowCaption = Attachments 
@@ -645,7 +630,22 @@ HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days)
  
 ----------------------------------------------------------------------------------- 
 -----------------------------------------------------------------------------------
-D:\testProp\messages_de.properties
+E:\testProp\messages_nl.properties
+----------------------------------------------------------------------------------- 
+ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report 
+HistoryBalanceReport.Title = HISTORY BALANCE REPORT 
+HistoryBalanceReport.SubTitle.Employee = Employee: 
+HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button 
+HistoryBalanceReport.TableHeader.TypeOfAction = Type of action 
+HistoryBalanceReport.TableHeader.Description = Description 
+HistoryBalanceReport.TableHeader.Start = Start date 
+HistoryBalanceReport.TableHeader.End = End date 
+HistoryBalanceReport.TableHeader.Difference = Difference 
+HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days) 
+ 
+----------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------
+E:\testProp\messages_de.properties
 ----------------------------------------------------------------------------------- 
 ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report 
 HistoryBalanceReport.Title = HISTORY BALANCE REPORT 
