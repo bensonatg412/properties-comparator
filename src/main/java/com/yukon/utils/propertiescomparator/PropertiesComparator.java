@@ -5,11 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
 import java.util.logging.*;
 
 @Component
@@ -17,58 +13,56 @@ public class PropertiesComparator {
     private Map<String, Properties> properties = new LinkedHashMap<>();
     private Map<String, Object> keys = new LinkedHashMap<>();
     private Map<String, List<String>> forgotKeys = new HashMap<>();
-    //--------- Peter German ------------
-    private static String str = null;
-    private static Logger LOGGER = null;
-    private static FileHandler FILEH = null;
+    private StringBuilder strLog = new StringBuilder(); // variable for Logging
+    private String newLine = System.getProperty("line.separator");
 
-    static{
-        try{
-            System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s %n");
-            FILEH = new FileHandler("./LogFile.log");
-            LOGGER = Logger.getLogger(PropertiesComparator.class.getName());
-            LOGGER.addHandler(FILEH);
-            SimpleFormatter formt = new SimpleFormatter();
-            FILEH.setFormatter(formt);
-            LOGGER.setUseParentHandlers(false);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    //-----------------------------------
-
-
-    public void Execute() throws IOException{
+    public void Execute(){
         loadProperties(keys, properties);
         checkMissingKeys(keys, properties, forgotKeys);
         printAllValues(keys, properties);
         printUntranslatedValues(forgotKeys, properties);
-        printMissingValues(forgotKeys, properties);
+        printNullValues(forgotKeys, properties);
+        loadLog(); // for Logging
     }
+
 
     private static String pathToFiles;
     @Value("${path.toFiles}")
-    public void setNumber(String value){
+    public void setPathToFiles(String value){
         pathToFiles = value;
     }
 
-    private Map<String, Object> loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException {
-       // String pathToFiles = System.getProperty("user.dir") + "/testProp";
-        try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
-            paths.filter(Files::isRegularFile).forEach(path -> {
-                Properties prop = new PropertiesSorted();
-                try {
-                    prop.load(new FileInputStream(path.toFile()));
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                properties.put(path.toString(), prop);
-                runThroughKeys(keys, prop);
-            });
+    private static String[] fileSuffixMutate;
+    @Value("${suffix.file}")
+    public void setPathSuffix(String value){
+        fileSuffixMutate = value.trim().split(",");
+    }
+
+    private static String nameFile;
+    @Value("${name.file}")
+    public void setNameFile(String value){
+        nameFile = value;
+    }
+
+    // Loading files *.properties
+    private Map<String, Object> loadProperties(Map<String, Object> keys, Map<String, Properties> properties){
+        builderPath();
+        for(String path: fileSuffixMutate){
+            Properties prop = new PropertiesSorted();
+            try{
+                prop.load(new FileInputStream(path));
+            }catch(IOException e){
+                System.err.println("No such files !!!");
+                e.printStackTrace();
+            }
+            properties.put(path, prop);
+            runThroughKeys(keys, prop);
         }
+
         return keys;
     }
 
+    // for adding all keys of properties files
     private void runThroughKeys(Map<String, Object> keys, Properties properties){
         properties.keySet().forEach(key -> {
             String string = key.toString().trim();
@@ -78,43 +72,15 @@ public class PropertiesComparator {
         });
     }
 
-    private void printAllValues(Map<String, Object> keys, Map<String, Properties> properties){
-        String newLine = System.getProperty("line.separator");
-        System.out.format("%80s", "Key");
-        //------ Peter German ------
-        str = String.format("%80s", "Key");
-        //---------------------
-        List<String> languageKeys = new ArrayList<>(properties.keySet());
-        for (String propertyKey : languageKeys) {
-            System.out.format("%255s", propertyKey);
-            //------ Peter German ------
-            str += String.format("%255s", propertyKey);
-            //---------------------
+    // building path of files *.properties
+    private static void builderPath(){
+        for(int i = 0; i< fileSuffixMutate.length; i++){
+            fileSuffixMutate[i] = pathToFiles+nameFile+fileSuffixMutate[i]+".properties";
         }
-        System.out.format("%s", newLine);
-        //------ Peter German ------
-        LOGGER.info(str);
-        //---------------------
-        keys.keySet().forEach(wordKey -> {
-            System.out.format("%80s", wordKey);
-            //------ Peter German ------
-            str = String.format("%80s", wordKey);
-            //---------------------
-            for (String languageKey : languageKeys){
-                Properties property = properties.get(languageKey);
-                String propertyValue = property.getProperty(wordKey);
-                System.out.format("%255s", propertyValue);
-                //------ Peter German ------
-                str += String.format("%255s", propertyValue);
-                //---------------------
-            }
-            //------ Peter German ------
-            LOGGER.info(str);
-            //---------------------
-            System.out.format("%s", newLine);
-        });
     }
+    //---------------------------------------------------------------------------
 
+    // Selection of untranslated and null values
     private Map<String, List<String>> checkMissingKeys(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
         List<String> languageKeys = new ArrayList<>(properties.keySet());
         keys.keySet().forEach(wordKey -> {
@@ -131,7 +97,7 @@ public class PropertiesComparator {
                     String languageMarker;
                     if (split2.length > 0){
                         languageMarker = split2[0];
-                    } else {
+                    } else { // этот блок не обязателен если файл с суфиксом "_en" уже есть
                         languageMarker = "_en";
                     }
                     if (propertyValue.trim().toLowerCase().contains(languageMarker)){
@@ -140,80 +106,99 @@ public class PropertiesComparator {
                 }
             }
         });
+
         return forgotKeys;
     }
 
+    // for adding null and untranslated values
     private void checkValueAbsence(Map<String, List<String>> forgotKeys, String wordKey, String languageKey){
         if(!forgotKeys.containsKey(languageKey)){
             forgotKeys.put(languageKey, new ArrayList<>());
         }
         forgotKeys.get(languageKey).add(wordKey);
     }
+    //-----------------------------------------------------------------------------------
 
-    private void printMissingValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
-        String newLine = System.getProperty("line.separator");
+
+    // For printing all keys = values
+    private void printAllValues(Map<String, Object> keys, Map<String, Properties> properties){
+        strLog.append(String.format("%s%s%80s", newLine, newLine, "Key")); // for Logging
         List<String> languageKeys = new ArrayList<>(properties.keySet());
-        String englishPropertyKey = languageKeys.stream().filter(name -> !name.contains("messages_")).findFirst().get();
-        Properties englishProperties = properties.get(englishPropertyKey);
-        System.out.println("MISSING VALUES SECTION");
-        for (String languageFileKey : forgotKeys.keySet()){
-            System.out.println("-----------------------------------------------------------------------------------");
-            System.out.println(languageFileKey);
-            System.out.println("-----------------------------------------------------------------------------------");
-            //------ Peter German ------
-            str = String.format("%s","-----------------------------------------------------------------------------------\n" +
-                    languageFileKey+ "\n-----------------------------------------------------------------------------------");
-            LOGGER.info(str);
-            //---------------------
-            for (String textKey : forgotKeys.get(languageFileKey)){
-                if(properties.get(languageFileKey).getProperty(textKey) == null){
-                    System.out.println(textKey + " = " + englishProperties.getProperty(textKey));
-                    //------ Peter German ------
-                    str = String.format("%s",textKey + " = " + englishProperties.getProperty(textKey));
-                    LOGGER.info(str);
-                    //---------------------
-                }
-            }
-            //------ Peter German ------
-            LOGGER.info("");
-            //---------------------
-            System.out.println("-----------------------------------------------------------------------------------");
-            //------ Peter German ------
-            str = String.format("%s","-----------------------------------------------------------------------------------");
-            LOGGER.info(str);
-            //---------------------
-
+        for (String propertyKey : languageKeys) {
+            strLog.append(String.format("%255s", propertyKey)); // for Logging
         }
-        System.out.format("%s", newLine);
+        strLog.append(String.format("%s", newLine)); // for Logging
+        keys.keySet().forEach(wordKey -> {
+            strLog.append(String.format("%80s", wordKey)); // for Logging
+            for (String languageKey : languageKeys){
+                Properties property = properties.get(languageKey);
+                String propertyValue = property.getProperty(wordKey);
+                strLog.append(String.format("%255s", propertyValue)); // for Logging
+            }
+            strLog.append(String.format("%s", newLine)); // for Logging
+        });
     }
 
+    // For printing all untranslated keys = values
     private void printUntranslatedValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
-        System.out.println("UNTRANSLATED VALUES SECTION");
         String newLine = System.getProperty("line.separator");
+        strLog.append(String.format("%s%80s", newLine,"THIS IS UNTRANSLATED VALUES"+newLine));
+
         for (String languageFileKey : forgotKeys.keySet()){
-            System.out.println("-----------------------------------------------------------------------------------");
-            System.out.println(languageFileKey);
-            System.out.println("-----------------------------------------------------------------------------------");
-            //------ Peter German ------
-            str = String.format("%s","-----------------------------------------------------------------------------------\n" +
-                    languageFileKey+ "\n-----------------------------------------------------------------------------------");
-            LOGGER.info(str);
-            //---------------------
+            strLog.append(String.format("%s","-----------------------------------------------------------------------------------"+newLine+  // for Logging
+                    languageFileKey+newLine+"-----------------------------------------------------------------------------------"+newLine)); // for Logging
             for (String textKey : forgotKeys.get(languageFileKey)){
                 if(properties.get(languageFileKey).getProperty(textKey) != null){
-                    System.out.println(textKey + " = " + properties.get(languageFileKey).getProperty(textKey));
-                    //------ Peter German ------
-                    str = String.format("%s",textKey + " = " + properties.get(languageFileKey).getProperty(textKey));
-                    LOGGER.info(str);
-                    //---------------------
+                    strLog.append(String.format("%s",textKey + " = " + properties.get(languageFileKey).getProperty(textKey)+newLine)); // for Logging
                 }
             }
-            System.out.println("-----------------------------------------------------------------------------------");
-            //------ Peter German ------
-            str = String.format("%s","-----------------------------------------------------------------------------------");
-            LOGGER.info(str);
-            //---------------------
+            strLog.append(String.format("%s","-----------------------------------------------------------------------------------"+newLine+newLine)); // for Logging
         }
-        System.out.format("%s", newLine);
+        strLog.append(String.format("%80s", newLine+"==================================================================================="+newLine+newLine));
     }
+
+    // For printing all keys = value that are null
+    private void printNullValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
+        String newLine = System.getProperty("line.separator");
+        List<String> languageKeys = new ArrayList<>(properties.keySet());
+        String englishPropertyKey = languageKeys.stream().filter(name -> name.contains("messages_en")).findFirst().get();
+        Properties englishProperties = properties.get(englishPropertyKey);
+        strLog.append(String.format("%80s", "THIS IS NULL VALUES"+newLine));
+        for (String languageFileKey : forgotKeys.keySet()){
+            strLog.append(String.format("%s","-----------------------------------------------------------------------------------"+newLine+  // for Logging
+                    languageFileKey+newLine+"-----------------------------------------------------------------------------------"+newLine)); // for Logging
+            for (String textKey : forgotKeys.get(languageFileKey)){
+                if(properties.get(languageFileKey).getProperty(textKey) == null){
+                    strLog.append(String.format("%s",textKey + " = " + englishProperties.getProperty(textKey)+newLine)); // for Logging
+                }
+            }
+            strLog.append(String.format("%s","-----------------------------------------------------------------------------------"+newLine)); // for Logging
+        }
+        strLog.append(String.format("%80s", newLine+"==================================================================================="+newLine+newLine));
+    }
+    //---------------------------------------------------------------------------------
+
+    // For Logging ------------
+    private void loadLog(){
+
+        Logger LOGGER = null;
+        FileHandler FILEH = null;
+
+        try{
+            System.setProperty("java.util.logging.SimpleFormatter.format", "%5$s %n");
+            String pathToLog = System.getProperty("user.dir") + "/LogFile.log";
+            FILEH = new FileHandler(pathToLog);
+            LOGGER = Logger.getLogger(PropertiesComparator.class.getName());
+            LOGGER.addHandler(FILEH);
+            SimpleFormatter format = new SimpleFormatter();
+            FILEH.setFormatter(format);
+            LOGGER.setUseParentHandlers(true);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        LOGGER.info(strLog.toString());
+    }
+    //-----------------------------------
+
 }
