@@ -1,6 +1,8 @@
 package com.yukon.utils.propertiescomparator;
 
 import java.util.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 public class PropertiesSorted extends Properties {
     private Set<Object> keySet = new LinkedHashSet<>(100);
