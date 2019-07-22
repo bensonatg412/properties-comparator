@@ -3,6 +3,7 @@ package com.yukon.utils.propertiescomparator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,6 +50,14 @@ public class PropertiesComparator {
         // String pathToFiles = System.getProperty("user.dir") + "/testProp";
         try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
             paths.filter(Files::isRegularFile).forEach(path -> {
+                try{
+                    if (!path.toString().contains(fileName)){
+                        throw new FileNotFoundException();
+                    }
+                } catch (FileNotFoundException ex){
+                    ex.printStackTrace();
+                    System.exit(1);
+                }
                 Properties prop = new PropertiesSorted();
                 try {
                     prop.load(new FileInputStream(path.toFile()));
@@ -58,6 +67,8 @@ public class PropertiesComparator {
                 properties.put(path.toString(), prop);
                 runThroughKeys(keys, prop);
             });
+        } catch (FileNotFoundException ex){
+            ex.printStackTrace();
         }
         return keys;
     }
