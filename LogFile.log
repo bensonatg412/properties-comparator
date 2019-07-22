@@ -1,6 +1,6 @@
 
 
-                                                                             Key                                                                                                                                                                                                                                     E:\testProp\not.properties                                                                                                                                                                                                                                  E:\testProp\not_de.properties                                                                                                                                                                                                                                  E:\testProp\not_fr.properties                                                                                                                                                                                                                                  E:\testProp\not_nl.properties
+                                                                             Key                                                                                                                                                                                                                                E:\testProp\messages.properties                                                                                                                                                                                                                             E:\testProp\messages_de.properties                                                                                                                                                                                                                             E:\testProp\messages_fr.properties                                                                                                                                                                                                                             E:\testProp\messages_nl.properties
                                                     LoginView.LoginField.Caption                                                                                                                                                                                                                                                          LOGIN                                                                                                                                                                                                                                                         NUTZER                                                                                                                                                                                                                                                    Identifiant                                                                                                                                                                                                                                                      GEBRUIKER
                                                  LoginView.PasswordField.Caption                                                                                                                                                                                                                                                       PASSWORD                                                                                                                                                                                                                                                       KENNWORT                                                                                                                                                                                                                                                   Mot de passe                                                                                                                                                                                                                                                     WACHTWOORD
                                                    LoginView.LogInButton.Caption                                                                                                                                                                                                                                                        SIGN IN                                                                                                                                                                                                                                                       ANMELDEN                                                                                                                                                                                                                                                      Connexion                                                                                                                                                                                                                                                      AANMELDEN
@@ -584,22 +584,22 @@ Email.Content.Credentials.ChangePassword.ToChangeYourAccountPasswordPleaseProcce
 
                                                    THIS IS UNTRANSLATED VALUES
 -----------------------------------------------------------------------------------
-E:\testProp\not_de.properties
+E:\testProp\messages_fr.properties
 -----------------------------------------------------------------------------------
-WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _DE
-WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _DE
 -----------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------
-E:\testProp\not_nl.properties
+E:\testProp\messages_nl.properties
 -----------------------------------------------------------------------------------
 WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _NL
 WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _NL
 -----------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------
-E:\testProp\not_fr.properties
+E:\testProp\messages_de.properties
 -----------------------------------------------------------------------------------
+WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found _DE
+WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images _DE
 -----------------------------------------------------------------------------------
 
 
@@ -607,35 +607,7 @@ E:\testProp\not_fr.properties
 
                                                            THIS IS NULL VALUES
 -----------------------------------------------------------------------------------
-E:\testProp\not_de.properties
------------------------------------------------------------------------------------
-ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report
-HistoryBalanceReport.Title = HISTORY BALANCE REPORT
-HistoryBalanceReport.SubTitle.Employee = Employee:
-HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button
-HistoryBalanceReport.TableHeader.TypeOfAction = Type of action
-HistoryBalanceReport.TableHeader.Description = Description
-HistoryBalanceReport.TableHeader.Start = Start date
-HistoryBalanceReport.TableHeader.End = End date
-HistoryBalanceReport.TableHeader.Difference = Difference
-HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days)
------------------------------------------------------------------------------------
------------------------------------------------------------------------------------
-E:\testProp\not_nl.properties
------------------------------------------------------------------------------------
-ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report
-HistoryBalanceReport.Title = HISTORY BALANCE REPORT
-HistoryBalanceReport.SubTitle.Employee = Employee:
-HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button
-HistoryBalanceReport.TableHeader.TypeOfAction = Type of action
-HistoryBalanceReport.TableHeader.Description = Description
-HistoryBalanceReport.TableHeader.Start = Start date
-HistoryBalanceReport.TableHeader.End = End date
-HistoryBalanceReport.TableHeader.Difference = Difference
-HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days)
------------------------------------------------------------------------------------
------------------------------------------------------------------------------------
-E:\testProp\not_fr.properties
+E:\testProp\messages_fr.properties
 -----------------------------------------------------------------------------------
 AddRequestView.AttachButton.Description = Attach image
 AttachImage.WindowCaption = Attachments
@@ -656,6 +628,34 @@ MasterTables.WorkingDays.AverageWorkingTimePerDay.Caption = Average working time
 MasterTables.WorkingDays.AverageWorkingTime.Zero = Average working time per day cannot be zero
 WebServiceMobileException.ABSENCE_IMAGE_NOT_FOUND = The image has not been found
 WebServiceMobileException.ABSENCE_IMAGE_WRONG_ABSENCE_TYPE = Request with this absence type cannot contains images
+ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report
+HistoryBalanceReport.Title = HISTORY BALANCE REPORT
+HistoryBalanceReport.SubTitle.Employee = Employee:
+HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button
+HistoryBalanceReport.TableHeader.TypeOfAction = Type of action
+HistoryBalanceReport.TableHeader.Description = Description
+HistoryBalanceReport.TableHeader.Start = Start date
+HistoryBalanceReport.TableHeader.End = End date
+HistoryBalanceReport.TableHeader.Difference = Difference
+HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days)
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+E:\testProp\messages_nl.properties
+-----------------------------------------------------------------------------------
+ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report
+HistoryBalanceReport.Title = HISTORY BALANCE REPORT
+HistoryBalanceReport.SubTitle.Employee = Employee:
+HistoryBalanceReport.ChooseMessage.Label = Please choose employee and click on the "Generate report" button
+HistoryBalanceReport.TableHeader.TypeOfAction = Type of action
+HistoryBalanceReport.TableHeader.Description = Description
+HistoryBalanceReport.TableHeader.Start = Start date
+HistoryBalanceReport.TableHeader.End = End date
+HistoryBalanceReport.TableHeader.Difference = Difference
+HistoryBalanceReport.TableHeader.DifferenceDays = Diff. (days)
+-----------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+E:\testProp\messages_de.properties
+-----------------------------------------------------------------------------------
 ReportView.Menu.ReportType.HISTORY_BALANCE_REPORT = History Balance report
 HistoryBalanceReport.Title = HISTORY BALANCE REPORT
 HistoryBalanceReport.SubTitle.Employee = Employee:
