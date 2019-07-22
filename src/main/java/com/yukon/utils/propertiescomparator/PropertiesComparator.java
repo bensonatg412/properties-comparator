@@ -2,13 +2,17 @@ package com.yukon.utils.propertiescomparator;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Stream;
 import java.util.logging.*;
+
 
 @Component
 public class PropertiesComparator {
@@ -17,8 +21,10 @@ public class PropertiesComparator {
     private Map<String, List<String>> forgotKeys = new HashMap<>();
     private StringBuilder strLog = new StringBuilder(); // variable for Logging
     private String newLine = System.getProperty("line.separator");
+    private static String pathToFiles;
+    private static String fileName;
 
-    public void Execute(){
+    public void Execute() throws IOException, FileNotFoundException{
         loadProperties(keys, properties);
         checkMissingKeys(keys, properties, forgotKeys);
         printAllValues(keys, properties);
@@ -27,40 +33,32 @@ public class PropertiesComparator {
         loadLog(); // for Logging
     }
 
-
-    private static String pathToFiles;
     @Value("${path.toFiles}")
     public void setPathToFiles(String value){
         pathToFiles = value;
     }
 
-    private static String[] fileSuffixMutate;
-    @Value("${suffix.file}")
-    public void setPathSuffix(String value){
-        fileSuffixMutate = value.trim().split(",");
+    @Value("${file.name}")
+    public void setFileName(String value){
+        fileName = value;
     }
 
-    private static String nameFile;
-    @Value("${name.file}")
-    public void setNameFile(String value){
-        nameFile = value;
-    }
 
-    // Loading files *.properties
-    private Map<String, Object> loadProperties(Map<String, Object> keys, Map<String, Properties> properties){
-        builderPath();
-        for(String path: fileSuffixMutate){
-            Properties prop = new PropertiesSorted();
-            try{
-                prop.load(new FileInputStream(path));
-            }catch(IOException e){
-                System.err.println("No such files !!!");
-                e.printStackTrace();
-            }
-            properties.put(path, prop);
-            runThroughKeys(keys, prop);
+
+    private Map<String, Object> loadProperties(Map<String, Object> keys, Map<String, Properties> properties) throws IOException, FileNotFoundException {
+        // String pathToFiles = System.getProperty("user.dir") + "/testProp";
+        try (Stream<Path> paths = Files.walk(Paths.get(pathToFiles))) {
+            paths.filter(Files::isRegularFile).forEach(path -> {
+                Properties prop = new PropertiesSorted();
+                try {
+                    prop.load(new FileInputStream(path.toFile()));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                properties.put(path.toString(), prop);
+                runThroughKeys(keys, prop);
+            });
         }
-
         return keys;
     }
 
@@ -74,13 +72,6 @@ public class PropertiesComparator {
         });
     }
 
-    // building path of files *.properties
-    private static void builderPath(){
-        for(int i = 0; i< fileSuffixMutate.length; i++){
-            fileSuffixMutate[i] = pathToFiles+nameFile+fileSuffixMutate[i]+".properties";
-        }
-    }
-    //---------------------------------------------------------------------------
 
     // Selection of untranslated and null values
     private Map<String, List<String>> checkMissingKeys(Map<String, Object> keys, Map<String, Properties> properties, Map<String, List<String>> forgotKeys){
@@ -95,7 +86,7 @@ public class PropertiesComparator {
                     if (propertyValue.trim().isEmpty()){
                         checkValueAbsence(forgotKeys, wordKey, languageKey);
                     }
-                    String[] split2 = languageKey.split("messages")[1].split(".properties");
+                    String[] split2 = languageKey.split(fileName)[1].split(".properties");
                     String languageMarker;
                     if (split2.length > 0){
                         languageMarker = split2[0];
@@ -163,7 +154,7 @@ public class PropertiesComparator {
     private void printNullValues(Map<String, List<String>> forgotKeys, Map<String, Properties> properties){
         String newLine = System.getProperty("line.separator");
         List<String> languageKeys = new ArrayList<>(properties.keySet());
-        String englishPropertyKey = languageKeys.stream().filter(name -> name.contains("messages_en")).findFirst().get();
+        String englishPropertyKey = languageKeys.stream().filter(name -> !name.contains(fileName + "_")).findFirst().get();
         Properties englishProperties = properties.get(englishPropertyKey);
         strLog.append(String.format("%80s", "THIS IS NULL VALUES"+newLine));
         for (String languageFileKey : forgotKeys.keySet()){
